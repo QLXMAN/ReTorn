@@ -1115,6 +1115,14 @@ async function handleMessage(msg) {
       }
     break;
 
+    case "set_value":
+      if (m.object && m.location) {
+        await setValue(m.object, m.location);
+        return {status: true, message: `Object has been set.`}
+      } else {
+        throw {status: false, message: "Key or object not properly sent with message."}
+      }
+    break;
     case "delete_settings_key":
       if (m.key && m.item) {
         const settings = await JSON.parse(JSON.stringify(await getValue('settings', 'sync')));
@@ -1670,7 +1678,7 @@ async function newInstallation() {
 
   const fetches = await Promise.all([fetch(sett),fetch(feat),fetch(noti)]);
   const jsons = await Promise.all([fetches[0].json(), fetches[1].json(), fetches[2].json()])
-  await Promise.all([setValue({"settings": jsons[0]}, "sync"), setValue({"features": jsons[1]}, "sync"), setValue({"notifications": jsons[2]}, "sync"), setValue({"torn_stats": {}}, "local"), setValue({"re_ct_items": {}}, "local")])
+  await Promise.all([setValue({"settings": jsons[0]}, "sync"), setValue({"features": jsons[1]}, "sync"), setValue({"notifications": jsons[2]}, "sync"), setValue({"torn_stats": {}}, "local"), setValue({"re_ct_items": {"items":{}}}, "local")])
 }
 
 /* 

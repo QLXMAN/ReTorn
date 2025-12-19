@@ -361,7 +361,12 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
 }
 
+.re_row#re_ct_main {
+  justify-content: start;
+}
+
 .switch_wrap {
+  margin-right: auto;
   width: 164px;
   max-width: 164px;
 }

@@ -151,6 +151,12 @@ function insertHead() {
           <label class="noselect" title="Show item coordinates overlay">Item overlay</label>
         </div>
       </div>
+
+      <div class="switch_wrap mb4" name="advanced_ct_settings">
+        <p class="re_ptitle">Advanced</p>
+        <button class="re_torn_button" type="button" id="reset_ct_items">Reset CT Items</button>
+      </div>
+      
     </div>
 
     <div class="re_row" id="re_ct_giftview">
@@ -254,6 +260,18 @@ function insertHead() {
     checkbox.prop("checked", !checkbox.prop("checked"));
     checkbox.trigger("change");
   });
+
+  RE_CONTAINER.find('#reset_ct_items').click(function() {
+    if (confirm('This will completely reset your Christmas Town found items list. There is no going back from this. Are you sure you would like to reset the Christmas Town item list?')) {
+      sendMessage({name: "set_value", object: {"re_ct_items": {items:{}}}, location: "local"})
+      .then((r) => {
+        updateGiftsList();
+      })
+      .catch((e) => {
+        console.error(e)
+      })
+    }
+  })
 }
 
 function updateFriendsList() {
