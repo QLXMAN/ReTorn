@@ -12,7 +12,7 @@
         if ($("div.profile-wrapper.medals-wrapper").length == 1 && $('.profile-buttons .profile-container .buttons-wrap').length == 1) {
           profile_container_observer.observe($('.profile-container')[0], {attributes: false, childList: true, characterData: false, subtree:false})
           if ($('#re_stakeout_button').length == 0) {
-            insert_stakeout();
+            //insert_stakeout();
           }
           if ($('div.re_container').length == 0) {
             loadTS();
@@ -28,7 +28,7 @@
   });
 
   var profile_container_observer = new MutationObserver(function(mutations) { //watch profile buttons area, send cash removes the button, so we need to reinsert sometimes
-    insert_stakeout();
+    //insert_stakeout();
   })
   
   
