@@ -137,6 +137,10 @@ body.dark-mode .re_minigame_cheatwrap {
     overflow: hidden;
 }
 
+.re_no_shadow {
+    box-shadow: none;
+}
+
 #re_item_overlay_text {
   font: 10px monospace;
   color: #fff;
@@ -361,7 +365,12 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
 }
 
+.re_row#re_ct_main {
+  justify-content: start;
+}
+
 .switch_wrap {
+  margin-right: auto;
   width: 164px;
   max-width: 164px;
 }

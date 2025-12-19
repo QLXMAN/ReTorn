@@ -14,7 +14,8 @@
     "jail": {
         "filters": {
             "level": null,
-            "score": null
+            "score": null,
+            "bail": null
         },
         "quick": {
             "bust": false,
@@ -23,6 +24,17 @@
         "speed": {
             "bust": false,
             "bail": false
+        },
+        "easy": {
+            "bust": {
+                "enabled": true
+            },
+            "bail": {
+                "enabled": false
+            },
+            "refresh": {
+                "enabled": false
+            }
         }
     },
     "faction_ocs": {
