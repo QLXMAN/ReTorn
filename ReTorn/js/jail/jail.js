@@ -68,18 +68,62 @@ function initJail() {
   const RE_CONTAINER = $(`.re_container[data-feature="${QUICK_JAIL}"]`);
   disableFilterCheckbox(QUICK_JAIL);
 
+  const EASY_BUTTON_TOGGLES = `
+  <li id="re_easy_toggle_bail"><span class="re_menu_item"><i class="fa-solid fa-sack-dollar"></i><span class="re_menu_item_text">Toggle Easy Bail</span></span></li>
+  <li id="re_easy_toggle_bust"><span class="re_menu_item"><i class="fa-solid fa-soap"></i><span class="re_menu_item_text">Toggle Easy Bust</span></span></li>
+  <li id="re_easy_toggle_refresh"><span class="re_menu_item"><i class="fa-solid fa-rotate"></i><span class="re_menu_item_text">Toggle Refresh</span></span></li>
+  `;
+
+  RE_CONTAINER.find('#re_features_settings_view').prepend(EASY_BUTTON_TOGGLES);
+
+  RE_CONTAINER.find('#re_easy_toggle_bail, #re_easy_toggle_bust, #re_easy_toggle_refresh').click(function(e) {
+    e.stopPropagation();
+    let toggle_button = $(this);
+    console.log(toggle_button);
+    let id = toggle_button.attr("id");
+    let type = id.replace('re_easy_toggle_', ''); //get the type by the id name
+
+    let easy_button = $(`#re_jail_easy_${type}`);
+    if (!easy_button) return;
+
+    let enabled = false;//default false
+    if (easy_button.hasClass('re_hide')) { //if button is currently hidden, we're going to show it/enable it
+      enabled = true; //set to true
+      easy_button.removeClass('re_hide');
+    } else {
+      easy_button.addClass('re_hide');
+    }
+
+    let obj = {
+      "jail": {
+        "easy": {
+          [type]: {
+            "enabled": enabled
+          }
+        }
+      }
+    }
+
+    sendMessage({"name": "merge_sync", "key": "settings", "object": obj})
+    .then((r) => {
+      settings["jail"]["easy"][type]["enabled"] = enabled;
+    })
+    .catch((e) => console.error(e))
+
+});
+
   $(RE_CONTAINER.find('#re_disable_filters input[type=checkbox]')).change(function() {
     filterJail();
   });
 
   RE_CONTAINER.find('.re_head > .re_title').after(`
-    <div id="re_jail_refresh" class="re_header_icon_wrap" title="Refresh jail view">
+    <div id="re_jail_easy_refresh" class="re_header_icon_wrap" title="Refresh jail view">
         <i class="fas fa-rotate re_header_icon" style="--fa-animation-duration: 0.4s; --fa-animation-iteration-count: 1;--fa-animation-timing: ease-in-out;"></i>
     </div>
   `);
 
   
-  $("#re_jail_refresh").click(function(e) {
+  $("#re_jail_easy_refresh").click(function(e) {
     e.stopPropagation();
     if (!re_jail_refresh_lock) {
       re_jail_refresh_lock = true;
@@ -353,6 +397,17 @@ function initJail() {
     }
     if (jail_settings?.speed?.bail) {
         $('#re_jail_sbail').prop( "checked", jail_settings?.speed?.bail);
+    }
+
+    //easy button toggles
+    if (!jail_settings?.easy?.bust?.enabled) {
+      $('#re_jail_easy_bust').addClass('re_hide');
+    }
+    if (!jail_settings?.easy?.bail?.enabled) {
+      $('#re_jail_easy_bail').addClass('re_hide');
+    }
+    if (!jail_settings?.easy?.refresh?.enabled) {
+      $('#re_jail_easy_refresh').addClass('re_hide');
     }
 
     setQuickActions();

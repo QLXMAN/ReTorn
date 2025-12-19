@@ -24,6 +24,17 @@
         "speed": {
             "bust": false,
             "bail": false
+        },
+        "easy": {
+            "bust": {
+                "enabled": true
+            },
+            "bail": {
+                "enabled": false
+            },
+            "refresh": {
+                "enabled": false
+            }
         }
     },
     "faction_ocs": {
