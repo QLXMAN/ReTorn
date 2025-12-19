@@ -137,6 +137,10 @@ body.dark-mode .re_minigame_cheatwrap {
     overflow: hidden;
 }
 
+.re_no_shadow {
+    box-shadow: none;
+}
+
 #re_item_overlay_text {
   font: 10px monospace;
   color: #fff;

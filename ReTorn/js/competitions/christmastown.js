@@ -452,6 +452,7 @@ function christmas_town(response) {
       $('ul#nearby_items').empty();
       $('ul#nearby_chests').empty();
       $(`#re_item_overlay_text`).empty();
+      $(`#re_item_overlay_text`).parent(`.re_item_overlay_box`).addClass(`re_no_shadow`);
       let itemqty = 0;
       let chestqty = 0;
       if (response.mapData.items.length > 0) {
@@ -468,6 +469,7 @@ function christmas_town(response) {
               $('ul#nearby_items').append(`<li><div class="re_list_item item">${name} ${pos}</div></li>`);
               $(`.items-layer .ct-item img[src="${item.image.url}"]`).parent('.ct-item').addClass('re_item');
               $(`#re_item_overlay_text`).append(`<p>${name} ${pos}</p>`);
+              $(`#re_item_overlay_text`).parent(`.re_item_overlay_box`).removeClass(`re_no_shadow`);
             }
           }
         }
@@ -781,7 +783,7 @@ function insertItemOverlay() {
   if ($('#re_item_overlay_text').length == 0) {
     $('#map > .map-overview').prepend(`
       <div>
-        <div class="re_item_overlay_box">
+        <div class="re_item_overlay_box re_no_shadow">
           <span id="re_item_overlay_text"></span>
         </div>
       </div>
